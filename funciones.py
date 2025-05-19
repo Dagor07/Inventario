@@ -5,13 +5,13 @@ libros = []
 contador_id = 1
 prestamos_por_persona = {}
 
-def generar_id():
+def generate_id():
     global contador_id
     nuevo_id = contador_id
     contador_id += 1
     return nuevo_id
 
-def validar_entrada(texto, tipo=int, condiciones=None):
+def validate_entry(texto, tipo=int, condiciones=None):
     while True:
         valor = input(texto)
         if not valor.strip():
@@ -27,16 +27,16 @@ def validar_entrada(texto, tipo=int, condiciones=None):
         except:
             print("Formato inválido.")
 
-def registrar_libro():
+def register_book():
     titulo = input("Título: ").strip()
     autor = input("Autor: ").strip()
-    año = validar_entrada("Año de publicación: ", int, lambda x: 1500 <= x <= datetime.date.today().year)
+    año = validate_entry("Año de publicación: ", int, lambda x: 1500 <= x <= datetime.date.today().year)
     categoria = input("Categoría (Ficción, No Ficción, Infantil, Educativo): ").strip()
     if categoria not in ['Ficción', 'No Ficción', 'Infantil', 'Educativo']:
         print("Categoría inválida.")
         return
     libro = {
-        "id": generar_id(),
+        "id": generate_id(),
         "titulo": titulo,
         "autor": autor,
         "año": año,
@@ -48,8 +48,8 @@ def registrar_libro():
 
 
 
-def prestar_libro():
-    id_libro = validar_entrada("ID del libro a prestar: ")
+def lend_book():
+    id_libro = validate_entry("ID del libro a prestar: ")
     libro = next((l for l in libros if l["id"] == id_libro), None)
     if not libro:
         print("Libro no encontrado.")
